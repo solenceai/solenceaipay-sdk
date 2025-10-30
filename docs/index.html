@@ -34,7 +34,6 @@
             background: var(--bg-secondary);
         }
 
-        /* Header */
         .header {
             background: var(--bg-primary);
             border-bottom: 1px solid var(--border);
@@ -67,13 +66,15 @@
         .logo-icon {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 700;
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .nav {
@@ -150,7 +151,6 @@
             background: var(--primary-dark);
         }
 
-        /* Main Layout */
         .main-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -161,7 +161,6 @@
             min-height: calc(100vh - 64px);
         }
 
-        /* Sidebar */
         .sidebar {
             background: var(--bg-primary);
             border-radius: 12px;
@@ -215,7 +214,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Content */
         .content {
             background: var(--bg-primary);
             border-radius: 12px;
@@ -231,10 +229,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
         }
 
         .hero-description {
@@ -301,6 +296,13 @@
             font-weight: 600;
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
+        }
+
+        h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
         }
 
         p {
@@ -409,7 +411,6 @@
             color: #1e40af;
         }
 
-        /* Table of Contents */
         .toc {
             background: var(--bg-primary);
             border-radius: 12px;
@@ -461,7 +462,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Footer */
         .footer {
             background: var(--text-primary);
             color: #e2e8f0;
@@ -609,11 +609,12 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-container">
             <a href="#" class="logo">
-                <div class="logo-icon">S</div>
+                <div class="logo-icon">
+                    <img src="https://www.solenceai.com/solenceaipay-logo.png" alt="SolenceAiPay Logo">
+                </div>
                 <span>SolenceAiPay SDK</span>
             </a>
             
@@ -643,9 +644,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <div class="main-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-title">Documentation</div>
             <ul class="sidebar-menu">
@@ -692,7 +691,6 @@
             </ul>
         </aside>
 
-        <!-- Main Content -->
         <main class="content">
           <div class="hero">
                 <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: linear-gradient(135deg, #2563eb, #7c3aed); border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);">
@@ -1214,7 +1212,6 @@ client.on('security_check_completed', (event: SDKEvent) => {
             </div>
         </main>
 
-        <!-- Table of Contents -->
         <aside class="toc">
             <div class="toc-title">On This Page</div>
             <ul class="toc-list">
@@ -1268,12 +1265,13 @@ client.on('security_check_completed', (event: SDKEvent) => {
         </aside>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand">
                 <div class="footer-logo">
-                    <div class="logo-icon">S</div>
+                    <div class="logo-icon">
+                        <img src="https://www.solenceai.com/solenceaipay-logo.png" alt="SolenceAiPay Logo">
+                    </div>
                     <span>SolenceAiPay</span>
                 </div>
                 <p class="footer-description">
