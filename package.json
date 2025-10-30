@@ -1,0 +1,62 @@
+{
+  "name": "@solenceai/payment-sdk",
+  "version": "1.0.0",
+  "description": "AI-powered secure payment SDK for Solana applications",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "require": "./dist/react/index.js",
+      "import": "./dist/react/index.mjs",
+      "types": "./dist/react/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "solana",
+    "payment",
+    "security",
+    "ai",
+    "web3",
+    "blockchain",
+    "openlibx402"
+  ],
+  "author": "SolenceAI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solenceai/payment-sdk.git"
+  },
+  "peerDependencies": {
+    "@solana/wallet-adapter-react": "^0.15.0",
+    "@solana/web3.js": "^1.87.0",
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "jest": "^29.7.0",
+    "@testing-library/react": "^14.0.0"
+  }
+}
