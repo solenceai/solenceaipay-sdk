@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolenceAiPay SDK - Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-code: #1e293b;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            width: 240px;
+            background: var(--bg-secondary);
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--bg-primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--text-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .github-link:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 260px 1fr 240px;
+            gap: 2rem;
+            padding: 2rem;
+            min-height: calc(100vh - 64px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+            border: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover {
+            background: var(--bg-secondary);
+            color: var(--primary);
+        }
+
+        .sidebar-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .sidebar-submenu {
+            list-style: none;
+            margin-left: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Content */
+        .content {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .hero {
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .badge-npm {
+            background: #cc3534;
+            color: white;
+        }
+
+        .badge-license {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .badge-typescript {
+            background: #3178c6;
+            color: white;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        pre {
+            background: var(--bg-code);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #334155;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            color: #e2e8f0;
+        }
+
+        .inline-code {
+            background: var(--bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e293b;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid #334155;
+            border-bottom: none;
+            margin-bottom: -1.5rem;
+        }
+
+        .code-lang {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .info-box {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.warning {
+            background: #fef3c7;
+            border-color: var(--warning);
+            color: #92400e;
+        }
+
+        .info-box.success {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .info-box.danger {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .info-box.info {
+            background: #dbeafe;
+            border-color: var(--primary);
+            color: #1e40af;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+            border: 1px solid var(--border);
+        }
+
+        .toc-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+            padding: 0.25rem 0;
+        }
+
+        .toc-link:hover {
+            color: var(--primary);
+        }
+
+        .toc-link.active {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .toc-sublist {
+            list-style: none;
+            margin-left: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: #e2e8f0;
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .footer-description {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .footer-section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+
+        .social-link:hover {
+            color: white;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .api-table th {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .api-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 240px 1fr;
+            }
+            .toc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .nav {
+                display: none;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">S</div>
+                <span>SolenceAiPay SDK</span>
+            </a>
+            
+            <nav class="nav">
+                <a href="#overview" class="nav-link active">Overview</a>
+                <a href="#installation" class="nav-link">Quick Start</a>
+                <a href="#api-reference" class="nav-link">API Reference</a>
+                <a href="#examples" class="nav-link">Examples</a>
+                <a href="#backend" class="nav-link">Backend Setup</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-box">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search docs...">
+                </div>
+                <a href="https://github.com/solenceai/solenceaipay-sdk" class="github-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-title">Documentation</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="#overview" class="sidebar-link active">Overview</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#installation" class="sidebar-link">Installation</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#quick-start" class="sidebar-link">Quick Start</a>
+                    <ul class="sidebar-submenu">
+                        <li class="sidebar-item">
+                            <a href="#basic-setup" class="sidebar-link">Basic Setup</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#react-integration" class="sidebar-link">React Integration</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#how-it-works" class="sidebar-link">How It Works</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#api-reference" class="sidebar-link">API Reference</a>
+                    <ul class="sidebar-submenu">
+                        <li class="sidebar-item">
+                            <a href="#client-api" class="sidebar-link">Client API</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#react-hooks" class="sidebar-link">React Hooks</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#backend" class="sidebar-link">Backend Setup</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#examples" class="sidebar-link">Examples</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#security" class="sidebar-link">Security</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="hero">
+                <h1 class="hero-title">SolenceAiPay SDK</h1>
+                <p class="hero-description">
+                    Secure payment infrastructure for Solana applications with AI-powered wallet verification and token-gated API access.
+                </p>
+                <div class="badge-container">
+                    <span class="badge badge-npm">npm v1.0.0</span>
+                    <span class="badge badge-license">MIT License</span>
+                    <span class="badge badge-typescript">TypeScript</span>
+                </div>
+            </div>
+
+            <section id="overview">
+                <h2>Overview</h2>
+                <p>
+                    SolenceAiPay helps developers build safer Solana applications by adding intelligent payment security checks. The SDK scans wallet addresses before transactions, protecting users from scams and malicious actors while maintaining a smooth payment experience.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">🤖 AI Security Scanning</div>
+                        <p class="feature-description">
+                            Real-time wallet risk assessment powered by machine learning models that analyze transaction patterns, wallet age, and known scammer databases.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">✅ Safety Badge Verification</div>
+                        <p class="feature-description">
+                            On-chain badge system that marks verified wallets as trusted, enabling faster transactions for good actors.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">🎟️ Token-Gated Access</div>
+                        <p class="feature-description">
+                            Hold 5M+ tokens for unlimited API access, creating sustainable token utility while offering 100 free daily scans for everyone.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">⚛️ React Components</div>
+                        <p class="feature-description">
+                            Pre-built hooks and UI components that integrate into your app in minutes, not days.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="installation">
+                <h2>Installation</h2>
+                <p>Install the SDK using your preferred package manager:</p>
+                
+                <div class="code-header">
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>npm install @solenceai/payment-sdk @solana/web3.js @solana/wallet-adapter-react</code></pre>
+
+                <div class="code-header">
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>yarn add @solenceai/payment-sdk @solana/web3.js @solana/wallet-adapter-react</code></pre>
+
+                <div class="code-header">
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code>pnpm add @solenceai/payment-sdk @solana/web3.js @solana/wallet-adapter-react</code></pre>
+            </section>
+
+            <section id="quick-start">
+                <h2>Quick Start</h2>
+
+                <h3 id="basic-setup">Basic Setup</h3>
+                <p>Initialize the client and start checking wallet security:</p>
+
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>import { SolenceAiPayClient } from '@solenceai/payment-sdk';
+
+const client = new SolenceAiPayClient({
+  apiEndpoint: 'https://api.solenceai.com/api',
+  tokenMintAddress: 'YOUR_TOKEN_MINT_ADDRESS',
+  minTokenBalance: 5000000,
+});
+
+// Check wallet security
+const security = await client.verifyRecipientSecurity(recipientAddress);
+
+if (security.passed) {
+  // Safe to proceed with payment
+  const result = await client.executePayment(
+    senderPublicKey,
+    signTransaction,
+    {
+      recipient: recipientAddress,
+      amount: '0.1',
+      memo: 'Payment for services',
+    }
+  );
+}</code></pre>
+
+                <h3 id="react-integration">React Integration</h3>
+                <p>Drop the payment hook into your component:</p>
+
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>import { useSolenceAiPay } from '@solenceai/payment-sdk/react';
+import { useWallet } from '@solana/wallet-adapter-react';
+
+function PaymentComponent() {
+  const { publicKey, signTransaction } = useWallet();
+  const {
+    performSecurityCheck,
+    executePayment,
+    securityCheck,
+    tokenGateStatus,
+  } = useSolenceAiPay({
+    config: {
+      apiEndpoint: process.env.NEXT_PUBLIC_API_ENDPOINT!,
+      tokenMintAddress: process.env.NEXT_PUBLIC_TOKEN_MINT_ADDRESS,
+    },
+  });
+
+  const handlePay = async () => {
+    const security = await performSecurityCheck(recipientAddress);
+    
+    if (security.passed) {
+      await executePayment({
+        recipient: recipientAddress,
+        amount: '0.1',
+        memo: 'Payment',
+      });
+    }
+  };
+
+  return (
+    &lt;div&gt;
+      {tokenGateStatus?.hasAccess && (
+        &lt;span className="badge"&gt;Unlimited Access&lt;/span&gt;
+      )}
+      &lt;button onClick={handlePay}&gt;Send Payment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </section>
+
+            <section id="how-it-works">
+                <h2>How It Works</h2>
+
+                <h3>Security Flow</h3>
+                <div class="info-box info">
+                    <strong>Payment Flow:</strong><br>
+                    User initiates payment → Check token balance → Has tokens? → Unlimited scans<br>
+                    No tokens → Check daily limit → Under limit? → Allow scan<br>
+                    Scan wallet address → AI analyzes risk → Score &lt; 75? → Block & warn user<br>
+                    Score ≥ 75? → Allow payment → Execute transaction
+                </div>
+
+                <h3>Token Gating</h3>
+                <p>The SDK implements a simple token-gating mechanism:</p>
+                <ul>
+                    <li><strong>Token Holders (5M+):</strong> Unlimited security scans, no rate limits</li>
+                    <li><strong>Free Tier:</strong> 100 scans per day, full feature access</li>
+                </ul>
+                <p>This creates sustainable token utility while keeping the SDK accessible to all developers.</p>
+            </section>
+
+            <section id="api-reference">
+                <h2>API Reference</h2>
+
+                <h3 id="client-api">SolenceAiPayClient</h3>
+                <p>The main client for all SDK operations.</p>
+
+                <h4>Configuration</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="inline-code">apiEndpoint</code></td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Your API base URL</td>
+                        </tr>
+                        <tr>
+                            <td><code class="inline-code">rpcUrl</code></td>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>Solana RPC endpoint</td>
+                        </tr>
+                        <tr>
+                            <td><code class="inline-code">securityThreshold</code></td>
+                            <td>number</td>
+                            <td>No</td>
+                            <td>Min security score (default: 75)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="inline-code">tokenMintAddress</code></td>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>Token for gating</td>
+                        </tr>
+                        <tr>
+                            <td><code class="inline-code">minTokenBalance</code></td>
+                            <td>number</td>
+                            <td>No</td>
+                            <td>Tokens needed (default: 5000000)</td>
+                        </tr>
+                        <tr>
+                            <td><code class="inline-code">rateLimitPerDay</code></td>
+                            <td>number</td>
+                            <td>No</td>
+                            <td>Free tier limit (default: 100)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Methods</h4>
+                
+                <h5>verifyRecipientSecurity(recipient, viewer?)</h5>
+                <p>Check wallet security score and risk level.</p>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>const security = await client.verifyRecipientSecurity(recipientAddress);
+// Returns: { score, riskLevel, passed, warnings, hasSafetyBadge, details }</code></pre>
+
+                <h5>checkTokenGate(walletAddress)</h5>
+                <p>Check if wallet has token-gated access.</p>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>const status = await client.checkTokenGate(userWallet);
+// Returns: { hasAccess, balance, requiredBalance, remainingCalls }</code></pre>
+
+                <h5>checkSafetyBadge(walletAddress)</h5>
+                <p>Verify if wallet has Safety Badge NFT.</p>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>const hasBadge = await client.checkSafetyBadge(walletAddress);
+// Returns: boolean</code></pre>
+
+                <h5>executePayment(sender, signTransaction, details, options?)</h5>
+                <p>Execute a complete payment with security checks.</p>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>const result = await client.executePayment(
+  senderPublicKey,
+  signTransaction,
+  {
+    recipient: recipientAddress,
+    amount: '0.1',
+    memo: 'Payment note',
+  }
+);
+// Returns: { success, signature?, error?, securityScore }</code></pre>
+
+                <h3 id="react-hooks">React Hooks</h3>
+
+                <h4>useSolenceAiPay(options)</h4>
+                <p>All-in-one hook with complete SDK functionality.</p>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>const {
+  performSecurityCheck,
+  executePayment,
+  paymentState,
+  tokenGateStatus,
+  transactions,
+  balance,
+  safetyBadge,
+} = useSolenceAiPay({
+  config: { apiEndpoint, tokenMintAddress },
+  autoCheckTokenGate: true,
+});</code></pre>
+            </section>
+
+            <section id="backend">
+                <h2>Backend Requirements</h2>
+                <p>Your backend needs to implement 4 endpoints for the SDK to function:</p>
+
+                <h3>1. Security Scanner</h3>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>POST /api/scan
+Headers: { "x-viewer-wallet": "USER_WALLET_ADDRESS" }
+Body: { wallet: string, isPublic?: boolean }
+
+Response: {
+  score: number;           // 0-100
+  riskLevel: "LOW" | "MEDIUM" | "HIGH";
+  passed: boolean;
+  warnings: string[];
+}</code></pre>
+
+                <h3>2. Safety Badge Check</h3>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>GET /api/badge/check?wallet=ADDRESS
+
+Response: {
+  onChainBadge: boolean;
+  wallet: string;
+}</code></pre>
+
+                <h3>3. Payment Logger</h3>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>POST /api/payments/log
+Body: {
+  sender: string;
+  recipient: string;
+  amount: number;
+  success: boolean;
+  transactionSignature?: string;
+  securityScore: number;
+}
+
+Response: { success: boolean, logId: string }</code></pre>
+
+                <h3>4. Transaction History</h3>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>GET /api/transactions?wallet=ADDRESS&limit=10&offset=0
+
+Response: {
+  transactions: Array&lt;{
+    signature: string;
+    type: "sent" | "received";
+    amount: number;
+    counterparty: string;
+    securityScore: number;
+    timestamp: string;
+  }&gt;;
+  total: number;
+}</code></pre>
+
+                <div class="info-box warning">
+                    <strong>⚠️ Implementation Required:</strong> These endpoints must be implemented on your backend server. See the full documentation for complete examples using Next.js API routes.
+                </div>
+            </section>
+
+            <section id="examples">
+                <h2>Examples</h2>
+
+                <h3>Complete Payment Flow</h3>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>// 1. Initialize client
+const client = new SolenceAiPayClient({
+  apiEndpoint: process.env.NEXT_PUBLIC_API_ENDPOINT!,
+  tokenMintAddress: process.env.NEXT_PUBLIC_TOKEN_MINT_ADDRESS,
+});
+
+// 2. Check token status (optional, good for UX)
+const tokenStatus = await client.checkTokenGate(userWallet);
+if (tokenStatus.hasAccess) {
+  console.log('User has unlimited access');
+}
+
+// 3. Check if recipient has Safety Badge (faster if they do)
+const hasBadge = await client.checkSafetyBadge(recipientAddress);
+if (hasBadge) {
+  console.log('Recipient is verified, skipping scan');
+}
+
+// 4. Perform security check
+const security = await client.verifyRecipientSecurity(recipientAddress);
+
+if (!security.passed) {
+  console.warn('Security check failed:', security.warnings);
+  // Show warning to user, let them decide
+}
+
+// 5. Execute payment
+const result = await client.executePayment(
+  senderPublicKey,
+  signTransaction,
+  {
+    recipient: recipientAddress,
+    amount: '0.1',
+    memo: 'Payment for services',
+  }
+);
+
+if (result.success) {
+  console.log('Payment successful:', result.signature);
+} else {
+  console.error('Payment failed:', result.error);
+}</code></pre>
+
+                <h3>Event Monitoring</h3>
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>// Track security checks
+client.on('security_check_completed', (event) => {
+  console.log('Security score:', event.data.score);
+  // Send to analytics
+});
+
+// Monitor payments
+client.on('payment_confirmed', (event) => {
+  console.log('Payment confirmed:', event.data.signature);
+  // Update UI, show success message
+});
+
+// Handle errors
+client.on('payment_failed', (event) => {
+  console.error('Payment error:', event.data.error);
+  // Show error to user
+});</code></pre>
+            </section>
+
+            <section id="security">
+                <h2>Security Best Practices</h2>
+
+                <h3>For Developers</h3>
+                <ul>
+                    <li><strong>Always perform security checks</strong> — Never skip verification in production, even for small amounts.</li>
+                    <li><strong>Respect security warnings</strong> — If a wallet scores below threshold, show clear warnings to users.</li>
+                    <li><strong>Implement proper rate limiting</strong> — Use Redis or similar for production rate limiting on your backend.</li>
+                    <li><strong>Validate all inputs</strong> — Check wallet addresses, sanitize user input, verify amounts are within bounds.</li>
+                    <li><strong>Log everything</strong> — Track all transactions, security checks, and rate limit hits for monitoring.</li>
+                    <li><strong>Keep secrets secure</strong> — Use environment variables, never commit API keys, rotate credentials regularly.</li>
+                </ul>
+
+                <div class="info-box danger">
+                    <strong>🔒 Critical Security Notice:</strong> Never expose your API keys or private keys in client-side code. Always use environment variables and server-side validation.
+                </div>
+
+                <h3>For Users</h3>
+                <ul>
+                    <li><strong>Double-check addresses</strong> — Always verify recipient wallet addresses before sending.</li>
+                    <li><strong>Trust the scores</strong> — If a wallet has a low security score, proceed with caution.</li>
+                    <li><strong>Start small</strong> — Test with small amounts first when sending to new addresses.</li>
+                    <li><strong>Get verified</strong> — Consider getting a Safety Badge for your wallet to build trust.</li>
+                </ul>
+            </section>
+
+            <section id="environment">
+                <h2>Environment Setup</h2>
+
+                <h3>Frontend Variables</h3>
+                <div class="code-header">
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code># .env.local
+NEXT_PUBLIC_API_ENDPOINT=https://api.solenceai.com/api
+NEXT_PUBLIC_TOKEN_MINT_ADDRESS=YOUR_TOKEN_MINT_ADDRESS
+NEXT_PUBLIC_MIN_TOKEN_BALANCE=5000000
+NEXT_PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com</code></pre>
+
+                <h3>Backend Variables</h3>
+                <div class="code-header">
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code># .env
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/db
+SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+NEXT_PUBLIC_TOKEN_MINT_ADDRESS=YOUR_TOKEN_MINT_ADDRESS
+NEXT_PUBLIC_MIN_TOKEN_BALANCE=5000000
+REDIS_URL=redis://localhost:6379  # For rate limiting</code></pre>
+            </section>
+
+            <section id="typescript">
+                <h2>TypeScript Support</h2>
+                <p>The SDK is built with TypeScript and provides full type definitions:</p>
+
+                <div class="code-header">
+                    <span class="code-lang">typescript</span>
+                </div>
+                <pre><code>import type {
+  SolenceAiPayConfig,
+  SecurityVerificationResult,
+  PaymentResult,
+  TokenGateStatus,
+  TransactionLog,
+  SDKEvent,
+} from '@solenceai/payment-sdk';
+
+// Full IntelliSense support
+const config: SolenceAiPayConfig = {
+  apiEndpoint: 'https://api.solenceai.com',
+  tokenMintAddress: 'YOUR_TOKEN_MINT',
+};
+
+// Type-safe event handling
+client.on('security_check_completed', (event: SDKEvent) => {
+  const result: SecurityVerificationResult = event.data;
+  console.log(result.score);
+});</code></pre>
+            </section>
+
+            <div class="info-box success">
+                <strong>✨ Ready to get started?</strong> Install the SDK and start building safer Solana applications today. Check out our <a href="#examples" style="color: #065f46; text-decoration: underline;">examples</a> for more implementation patterns.
+            </div>
+        </main>
+
+        <!-- Table of Contents -->
+        <aside class="toc">
+            <div class="toc-title">On This Page</div>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#overview" class="toc-link active">Overview</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#installation" class="toc-link">Installation</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#quick-start" class="toc-link">Quick Start</a>
+                    <ul class="toc-sublist">
+                        <li class="toc-item">
+                            <a href="#basic-setup" class="toc-link">Basic Setup</a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#react-integration" class="toc-link">React Integration</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="toc-item">
+                    <a href="#how-it-works" class="toc-link">How It Works</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#api-reference" class="toc-link">API Reference</a>
+                    <ul class="toc-sublist">
+                        <li class="toc-item">
+                            <a href="#client-api" class="toc-link">Client API</a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#react-hooks" class="toc-link">React Hooks</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="toc-item">
+                    <a href="#backend" class="toc-link">Backend Setup</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#examples" class="toc-link">Examples</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#security" class="toc-link">Security</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#environment" class="toc-link">Environment Setup</a>
+                </li>
+                <li class="toc-item">
+                    <a href="#typescript" class="toc-link">TypeScript Support</a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">S</div>
+                    <span>SolenceAiPay</span>
+                </div>
+                <p class="footer-description">
+                    Secure payment infrastructure for Solana applications with AI-powered wallet verification and token-gated API access. Building safer Web3 experiences for developers and users.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="footer-section-title">Documentation</h4>
+                <ul class="footer-links">
+                    <li><a href="#overview" class="footer-link">Overview</a></li>
+                    <li><a href="#installation" class="footer-link">Installation</a></li>
+                    <li><a href="#api-reference" class="footer-link">API Reference</a></li>
+                    <li><a href="#examples" class="footer-link">Examples</a></li>
+                    <li><a href="#backend" class="footer-link">Backend Setup</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-section-title">Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/solenceai/solenceaipay-sdk" class="footer-link">GitHub</a></li>
+                    <li><a href="https://www.npmjs.com/package/@solenceai/payment-sdk" class="footer-link">NPM Package</a></li>
+                    <li><a href="https://github.com/solenceai/solenceaipay-sdk/tree/main/examples" class="footer-link">Example Projects</a></li>
+                    <li><a href="https://github.com/solenceai/solenceaipay-sdk/discussions" class="footer-link">Community</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-section-title">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/solenceai/solenceaipay-sdk/issues" class="footer-link">Report Issues</a></li>
+                    <li><a href="mailto:support@solenceai.com" class="footer-link">Email Support</a></li>
+                    <li><a href="https://twitter.com/solenceai" class="footer-link">Twitter</a></li>
+                    <li><a href="mailto:enterprise@solenceai.com" class="footer-link">Enterprise</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>
+                © 2024 SolenceAI. Licensed under MIT License. Built on Solana.
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/solenceai" class="social-link" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/solenceai" class="social-link" aria-label="Twitter">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                <a href="https://solenceai.com" class="social-link" aria-label="Website">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Active link highlighting on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.toc-link, .sidebar-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality (basic filter)
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            // In a real implementation, this would filter content or show search results
+            console.log('Searching for:', searchTerm);
+        });
+    </script>
+</body>
+</html>
